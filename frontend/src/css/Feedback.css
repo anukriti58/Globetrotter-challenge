@@ -1,0 +1,39 @@
+.feedback {
+  position: relative;
+  text-align: center;
+}
+
+.feedback p {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.feedback-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.feedback-buttons button {
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: white;
+  color: #333;
+}
+
+.feedback-buttons button:hover {
+  background: #f1f1f1;
+}
+
+.feedback-buttons button:nth-child(2) {
+  background: linear-gradient(45deg, #25D366, #128C7E);
+  color: white;
+}
+
+.feedback-buttons button:nth-child(2):hover {
+  background: linear-gradient(45deg, #1ebe57, #0f6b5a);
+}

@@ -1,0 +1,144 @@
+.share-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .share-modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    max-width: 450px;
+    width: 90%;
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  .share-modal-content h2 {
+    color: #ff758c;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+  }
+  
+  .share-modal-content p {
+    color: #333;
+    margin: 10px 0;
+    font-size: 1.1em;
+  }
+  
+  .share-image {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 15px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #ff758c;
+    font-size: 1.2em;
+    margin: 20px 0;
+  }
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #6dd5fa;
+    border-top: 4px solid #ff758c;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  .countdown {
+    margin: 20px 0;
+  }
+  
+  .countdown-circle {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+  
+  .countdown-circle svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .countdown-circle circle {
+    fill: none;
+    stroke: #6dd5fa;
+    stroke-width: 5;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 0;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    animation: countdown 30s linear forwards;
+  }
+  
+  .countdown-circle span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    color: #ff758c;
+  }
+  
+  .share-modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .share-modal-buttons button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .share-modal-buttons button:first-child {
+    background: linear-gradient(45deg, #25D366, #128C7E);
+    color: white;
+  }
+  
+  .share-modal-buttons button:first-child:hover {
+    background: linear-gradient(45deg, #1ebe57, #0f6b5a);
+  }
+  
+  .share-modal-buttons button:last-child {
+    background: #dc3545;
+    color: white;
+  }
+  
+  .share-modal-buttons button:last-child:hover {
+    background: #c82333;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  @keyframes countdown {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: 283; }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
