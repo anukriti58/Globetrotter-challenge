@@ -113,24 +113,25 @@ Friends see your score and try to beat it.
 
 
 Project Structure
-globetrotter-challenge/
+```globetrotter-challenge/
 ├── backend/
-│   ├── index.js          # Express server
-│   ├── cities.json       # City data
-│   └── package.json
+│   ├── index.js           # Express server
+│   ├── cities.json        # City data
+│   └── package.json       # Backend dependencies
 ├── frontend/
 │   ├── public/
 │   │   ├── sounds/
-│   │   │   └── wrong.mp3 # Buzzer for incorrect guesses
-│   │   └── index.html
+│   │   │   └── wrong.mp3  # Buzzer for incorrect guesses
+│   │   └── index.html     # HTML entry point
 │   ├── src/
-│   │   ├── components/   # React components (Game, Feedback, ShareModal, etc.)
-│   │   ├── utils/        # Decryption helper
-│   │   ├── App.js
-│   │   ├── App.css
+│   │   ├── components/    # React components (Game, Feedback, ShareModal, etc.)
+│   │   ├── utils/         # Decryption helper
+│   │   ├── App.js         # Main app component
+│   │   ├── App.css        # Global styles
 │   │   └── other CSS files
-│   └── package.json
+│   └── package.json       # Frontend dependencies
 └── README.md
+```
 
 Notes
 
