@@ -136,15 +136,14 @@ Project Structure
 Notes
 
 Security: API payloads are encrypted to hide sensitive data (e.g., correct city).
-Audio: Buzzer sound plays only after user interaction (guess submission) to comply with browser policies.
+Audio: Buzzer sound plays only after user interaction (guess submission).
 Assets: Ensure wrong.mp3 is valid MP3 format and accessible at /sounds/wrong.mp3.
 
 Future Enhancements
 
-Add sound for correct guesses (e.g., correct.mp3).
 Include dynamic images in share modal using OpenAI DALL·E.
 Use MongoDB for persistent scores.
-Add sound toggle for accessibility.
+Add OAuth for maintaining user's prev scores.
 
 Troubleshooting
 
