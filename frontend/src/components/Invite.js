@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Game from './Game';
 import decryptPayload from '../utils/decrypt';
@@ -8,7 +8,7 @@ const Invite = () => {
   const { username } = useParams();
   const [inviterScore, setInviterScore] = useState(null);
   const [loading, setLoading] = useState(true);
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const API_URL = useCallback(process.env.REACT_APP_API_URL || 'http://localhost:5000', []);
 
   useEffect(() => {
     const fetchScore = async () => {
