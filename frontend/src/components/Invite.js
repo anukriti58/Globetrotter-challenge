@@ -8,11 +8,12 @@ const Invite = () => {
   const { username } = useParams();
   const [inviterScore, setInviterScore] = useState(null);
   const [loading, setLoading] = useState(true);
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
     const fetchScore = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/score/${username}`);
+        const res = await axios.get(`${API_URL}/score/${username}`);
         const decrypted = decryptPayload(res);
         if (decrypted) {
           setInviterScore(decrypted);
@@ -27,7 +28,7 @@ const Invite = () => {
       }
     };
     fetchScore();
-  }, [username]);
+  }, [username, API_URL]);
 
   return (
     <div>

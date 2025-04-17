@@ -3,15 +3,17 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+require('dotenv').config();
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 const cities = JSON.parse(fs.readFileSync(path.join(__dirname, 'cities.json')));
 const SECRET_KEY = 'globetrotter-secret-2025-16bytes';
 const scores = {};
 
+const PORT = process.env.PORT || 5000;
 //To Do: Move this to a database, add OAuth for mapping prev scores
 
 const getRandom = (arr, n) => {
@@ -94,6 +96,8 @@ app.get('/score/:username', (req, res) => {
   res.json(encryptPayload(score));
 });
 
-app.listen(5000, () => {
-  console.log('Backend running on http://localhost:5000');
+app.listen(PORT, () => {
+  console.log(`Backend running on ${PORT}`);
 });
+
+module.exports = app;

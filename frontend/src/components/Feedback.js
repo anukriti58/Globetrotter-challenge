@@ -8,6 +8,8 @@ const Feedback = ({ result, onNext, username, score }) => {
   const shareRef = useRef(null);
   const [showShareModal, setShowShareModal] = useState(false);
 
+  const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL || 'http://localhost:3000';
+
   useEffect(() => {
     if (!result?.correct) {
       const audio = new Audio('/sounds/wrong.mp3');
@@ -16,8 +18,7 @@ const Feedback = ({ result, onNext, username, score }) => {
   }, [result.correct]);
 
 
-
-  const shareUrl = `http://localhost:3000/invite/${encodeURIComponent(username)}`;
+  const shareUrl = `${FRONTEND_URL}/invite/${encodeURIComponent(username)}`;
   const shareMessage = `${username} scored ${score.correct} correct in Globetrotter! Can you beat their score?`;
   return (
     <>

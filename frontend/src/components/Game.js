@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Feedback from './Feedback';
 import Facts from './Facts';
@@ -15,11 +15,13 @@ const Game = () => {
   const [showModal, setShowModal] = useState(!localStorage.getItem('username'));
   const [loading, setLoading] = useState(false);
 
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
   // Start new game
-  const startGame = async () => {
+  const startGame = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/game');
+      const res = await axios.get(`${API_URL}/game`);
       const decrypted = decryptPayload(res);
       if (decrypted) {
         setGameData(decrypted);
@@ -34,7 +36,7 @@ const Game = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_URL]);
 
   // Handle guess
   const handleGuess = async (city) => {
@@ -43,7 +45,7 @@ const Game = () => {
     setLoading(true);
     try {
       const isCorrect = city === gameData.correct || false;
-      const res = await axios.post('http://localhost:5000/get-facts', {
+      const res = await axios.post(`${API_URL}/get-facts`, {
         isCorrect,
         city: gameData.correct
       });
@@ -56,7 +58,7 @@ const Game = () => {
         };
         setScore(newScore);
         // Save score
-        await axios.post('http://localhost:5000/score', {
+        await axios.post(`${API_URL}/score`, {
           username,
           score: newScore
         });
@@ -91,7 +93,7 @@ const Game = () => {
     if (!showModal) {
       startGame();
     }
-  }, [showModal]);
+  }, [showModal, startGame]);
 
   if (showModal) {
     return <UsernameModal onSubmit={handleUsernameSubmit} />;
