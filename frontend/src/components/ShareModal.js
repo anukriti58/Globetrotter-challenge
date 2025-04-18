@@ -1,27 +1,18 @@
 import { useState, useEffect } from 'react';
 import { WhatsappShareButton } from 'react-share';
+import useTimer from '../hook/useTimer';
 import '../css/ShareModal.css';
 
-const ShareModal = ({ username, score, shareUrl, shareMessage, onClose }) => {
-  const [countdown, setCountdown] = useState(30);
-
+const ShareModal = ({ score, shareUrl, shareMessage, onClose }) => {
 
   // Countdown timer
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          document.querySelector('.whatsapp-share-button')?.click();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+  function whatsappClick(time) {
+    if(time == 0) {   
+      document.querySelector('.whatsapp-share-button')?.click();
+    }
+  }
 
-    return () => clearInterval(timer);
-  }, []);
-
+  const countdown = useTimer(30, whatsappClick);
   return (
     <div className="share-modal">
       <div className="share-modal-content">

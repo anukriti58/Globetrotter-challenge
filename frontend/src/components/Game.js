@@ -4,6 +4,8 @@ import Feedback from './Feedback';
 import Facts from './Facts';
 import UsernameModal from './UsernameModal';
 import decryptPayload from '../utils/decrypt';
+import useTimer from '../hook/useTimer';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import '../css/Game.css';
 
 const Game = () => {
@@ -13,6 +15,7 @@ const Game = () => {
   const [score, setScore] = useState({ correct: 0, incorrect: 0 });
   const [username, setUsername] = useState(localStorage.getItem('username') || '');
   const [showModal, setShowModal] = useState(!localStorage.getItem('username'));
+  const [points, setPoints] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -38,9 +41,11 @@ const Game = () => {
     }
   }, [API_URL]);
 
-  // Handle guess
+  const { countdown, resetTimer, stopTimer } = useTimer(20, scoreCalculator);
+
   const handleGuess = async (city) => {
     if (!gameData) return;
+    stopTimer();
     setGuess(city);
     setLoading(true);
     try {
@@ -53,11 +58,10 @@ const Game = () => {
       if (decrypted) {
         setResult(decrypted);
         const newScore = {
-          correct: decrypted.correct ? score.correct + 1 : score.correct,
-          incorrect: !decrypted.correct ? score.incorrect + 1 : score.incorrect
+          correct: decrypted.correct ? score.correct + points : score.correct,
+          incorrect: !decrypted.correct ? score.incorrect - points : score.incorrect
         };
         setScore(newScore);
-        // Save score
         await axios.post(`${API_URL}/score`, {
           username,
           score: newScore
@@ -73,22 +77,32 @@ const Game = () => {
     }
   };
 
-  // Reset for next round
+  function scoreCalculator(timer) {
+    if (timer >= 15) {
+      setPoints(50);
+    } else if (timer >= 10) {
+      setPoints(25);
+    } else if (timer > 0) {
+      setPoints(10);
+    } else {
+      setPoints(0);
+    }
+  }
+
   const resetGame = () => {
     setGameData(null);
     setGuess(null);
     setResult(null);
     startGame();
+    resetTimer();
   };
 
-  // Handle username submission
   const handleUsernameSubmit = (name) => {
     setUsername(name);
     localStorage.setItem('username', name);
     setShowModal(false);
   };
 
-  // Load game on mount
   useEffect(() => {
     if (!showModal) {
       startGame();
@@ -100,10 +114,23 @@ const Game = () => {
   }
 
   return (
-    <div className="game">
+    <div className="game" style={{ textAlign: 'center' }}>
       <h2>Guess the City!</h2>
       <div className="score">
         <span>Correct: {score.correct}</span>
+        <div className="progress-bar">
+          <h4>Time Left:</h4>
+          <CircularProgressbar
+            value={countdown}
+            maxValue={20}
+            text={`${countdown}s`}
+            styles={buildStyles({
+              textColor: '#000',
+              pathColor: countdown > 15 ? 'green' : countdown > 10 ? 'orange' : 'red',
+              trailColor: '#d6d6d6'
+            })}
+          />
+        </div>
         <span>Incorrect: {score.incorrect}</span>
       </div>
       {loading ? (
